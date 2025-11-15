@@ -1,5 +1,5 @@
 // src/types/index.ts
-export type GroceryItem = {
+export type Item = {
   id: number;
   name: string;
   quantity: number;
@@ -8,6 +8,6 @@ export type GroceryItem = {
   created_at: number;
 };
 
-export type GroceryItemForm = Omit<GroceryItem, 'id' | 'created_at'> & {
+export type ItemForm = Omit<Item, 'id' | 'created_at'> & {
   id?: number;
 };
