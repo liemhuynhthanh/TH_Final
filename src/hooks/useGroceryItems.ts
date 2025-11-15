@@ -6,7 +6,7 @@ import * as db from '@/lib/db';
 import { Item, ItemForm } from '@/types';
 
 // Mock API URL (dùng jsonplaceholder)
-const API_URL = 'https://jsonplaceholder.typicode.com/todos';
+const API_URL = '';
 
 export function useGroceryItems() {
   const [items, setItems] = useState<Item[]>([]);
