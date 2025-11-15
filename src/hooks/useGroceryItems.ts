@@ -28,7 +28,6 @@ export function useGroceryItems() {
     }
   }, [searchQuery]); // Chỉ tạo lại hàm nếu searchQuery thay đổi
 
-  // Q10: Dùng useFocusEffect để tự động reload khi quay lại màn hình
   useFocusEffect(
     useCallback(() => {
       loadItems();
@@ -54,20 +53,7 @@ export function useGroceryItems() {
     loadItems();
   }, [loadItems]);
 
-  // Q7: Xóa
-  const handleDeleteItem = useCallback((id: number) => {
-    Alert.alert('Xác nhận xóa', 'Bạn có chắc chắn muốn xóa món này không?', [
-      { text: 'Hủy', style: 'cancel' },
-      {
-        text: 'Xóa',
-        style: 'destructive',
-        onPress: async () => {
-          await db.deleteItem(id);
-          loadItems();
-        },
-      },
-    ]);
-  }, [loadItems]);
+  
 
   // Q9: Import
   const handleImportFromApi = useCallback(async () => {
@@ -107,7 +93,7 @@ export function useGroceryItems() {
     handleAddItem,
     handleToggleItem,
     handleUpdateItem,
-    handleDeleteItem,
+   
     handleImportFromApi,
   };
 }
