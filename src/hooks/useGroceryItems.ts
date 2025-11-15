@@ -68,7 +68,32 @@ export function useGroceryItems() {
     ]);
   }, [loadItems]);
 
-  
+  // Q9: Import
+  const handleImportFromApi = useCallback(async () => {
+    setIsImporting(true);
+    setError(null);
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const apiData: { title: string; completed: boolean }[] = await response.json();
+      
+      // Map dữ liệu API sang định dạng DB
+      const itemsToImport = apiData.map(apiItem => ({
+        name: apiItem.title, // Map 'title' sang 'name'
+        bought: apiItem.completed ? 1 : 0 // Map 'completed' sang 'bought'
+      }));
+
+      await db.importFromApi(itemsToImport);
+      Alert.alert('Thành công', `Đã import. Các món trùng lặp đã được bỏ qua.`);
+      loadItems(); // Tải lại để hiển thị dữ liệu mới
+    } catch (e) {
+      console.error(e);
+      setError('Import thất bại. Vui lòng thử lại.');
+      Alert.alert('Lỗi', 'Import thất bại. Vui lòng thử lại.');
+    } finally {
+      setIsImporting(false);
+    }
+  }, [loadItems]);
 
   return {
     items,
@@ -82,6 +107,6 @@ export function useGroceryItems() {
     handleToggleItem,
     handleUpdateItem,
     handleDeleteItem,
-   
+    handleImportFromApi,
   };
 }
